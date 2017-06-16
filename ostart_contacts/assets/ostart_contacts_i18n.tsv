@@ -169,3 +169,7 @@ essai_contacts_click2	Click to print the contacts list!	Cliquez pour imprimer la
 essai_contacts_button_description1	This button adds a chosen contact to the list.	Ce bouton ajoute un contact choisi à la liste.
 essai_contacts_button_description2	This button prints the contacts list in the console.	Ce bouton imprime la liste de contacts dans la console.
 essai_contacts_button	Pick a contact.	Selectionne un contact.
+essai_calendar_button	Export besport event to android calendar.	Exporter un évènement besport vers le calendrier d'android.
+essai_calendar	Move an event from besport to Android calendar.	Déplacer un évènement de besport vers le calendrier d'Android.
+essai_calendar_button_description	This button adds a besport event with default parameters in your android's default calendar. You can change it interactively before to save it.	Ce bouton ajoute un évènement besport, ayant des paramètres par défaut, au calendrier par défaut d'Android. Vous pouvez le modifier interactivement avant de l'enregistrer.
+essai_calendar_click	Click to add an event!	Cliquez pour ajouter un évènement!

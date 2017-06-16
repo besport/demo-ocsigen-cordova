@@ -46,6 +46,7 @@ let demos =
   ; (module Demo_react)
   ; (module Demo_cache)
   ; (module Essai_contacts)
+  ; (module Essai_calendar)
   ]
 
 let drawer_contents () =
