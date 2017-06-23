@@ -173,3 +173,11 @@ essai_calendar_button	Export besport event to android calendar.	Exporter un év�
 essai_calendar	Move an event from besport to Android calendar.	Déplacer un évènement de besport vers le calendrier d'Android.
 essai_calendar_button_description	This button adds a besport event with default parameters in your android's default calendar. You can change it interactively before to save it.	Ce bouton ajoute un évènement besport, ayant des paramètres par défaut, au calendrier par défaut d'Android. Vous pouvez le modifier interactivement avant de l'enregistrer.
 essai_calendar_click	Click to add an event!	Cliquez pour ajouter un évènement!
+essai_intent_button	Get intent	Recevoir un intent
+essai_intent_click	Click here to get an intent	Cliquez ici pour recevoir un intent
+share_intent_button	Send intent	Envoyer un intent
+share_intent_button_description	Add an image uri and click to share it.	Ajoutez un uri d'image et cliquez pour le partager.
+share_intent_button	Share Intent Button.	Bouton Share Intent.
+share_intent_button_description2	Add a text uri and click to share it.	Ajoutez un uri de texte et cliquez pour le partager.
+share_intent_button_description3	Add a video uri and click to share it.	Ajoutez un uri de video et cliquez pour le partager.
+share_intent_popup	See the shared file	Voir le fichier partage

@@ -31,7 +31,7 @@ SERVER_DB_PACKAGES    := pgocaml.syntax
 
 # OCamlfind packages for the client
 CLIENT_PACKAGES       := lwt.ppx js_of_ocaml.ppx js_of_ocaml.deriving.ppx \
-                         gen_js_api ppx_deriving.std ocsigen-start.client ocaml-js-stdlib cordova-plugin-contacts cordova-plugin-calendar
+                         gen_js_api ppx_deriving.std ocsigen-start.client ocaml-js-stdlib cordova-plugin-contacts cordova-plugin-calendar cordova-plugin-intent
 
 # Automatically install packages via NPM
 USE_NPM               := yes

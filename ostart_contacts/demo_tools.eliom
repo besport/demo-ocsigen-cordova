@@ -47,6 +47,8 @@ let demos =
   ; (module Demo_cache)
   ; (module Essai_contacts)
   ; (module Essai_calendar)
+  ; (module Essai_intent)
+  ; (module Share_intent)
   ]
 
 let drawer_contents () =
