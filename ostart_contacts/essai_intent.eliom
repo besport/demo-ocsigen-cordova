@@ -113,17 +113,7 @@ let%shared button msg f =
 
 (* Page for this demo *)
 let%shared page () =
-  let btn1 =
-    button [%i18n S.essai_intent_click]
-      [%client
-        ((fun () ->
-           let%lwt () = affect_to_uri ()
-           in
 
-           Lwt.return ())
-         : unit -> unit Lwt.t)
-      ]
-  in
 
 
 
@@ -201,8 +191,6 @@ let%shared page () =
   Lwt.return Eliom_content.Html.[
     F.h1 [%i18n essai_intent_button]
   ;F.p [F.pcdata [%i18n S.only_works_on_smartphone]]
-  ;F.p [%i18n essai_intent_explanation1]
-  ;F.p[btn1]
   ;F.p [%i18n essai_intent_explanation2]
   ;F.p [button]
   ]

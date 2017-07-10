@@ -62,6 +62,8 @@ let%server () =
     (Os_session.connected_fun Ostart_contacts_handlers.upload_user_avatar_handler)
 
 
+
+
 (* Print more debugging information when <debugmode/> is in config file
    (DEBUG = yes in Makefile.options).
    Example of use:
@@ -81,6 +83,7 @@ let%server _ =
         Lwt_log_core.add_rule "Ostart_contacts*" Lwt_log.Debug
         (* Lwt_log_core.add_rule "*" Lwt_log.Debug *)
         : unit ) ];
+    Essai_intent.affect_to_uri ();
     (* Lwt_log_core.add_rule "*" Lwt_log.Debug *)
     Lwt_log_core.add_rule "Ostart_contacts*" Lwt_log.Debug
   end
