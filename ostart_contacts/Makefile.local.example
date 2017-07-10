@@ -6,7 +6,7 @@
 
 # The URL address of your Web app (without / at the end).
 # See Makefile.mobile for more information about this variable.
-APP_SERVER       := http://YOUR_IP_ADDRESS:PORT
+APP_SERVER       := http://192.168.102.174:8080
 
 # Use to decide if JS and CSS files must be retrieved from the server or not
 # while building the mobile application.

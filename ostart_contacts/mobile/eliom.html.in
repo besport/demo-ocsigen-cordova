@@ -13,7 +13,7 @@
                          'unsafe-inline';
                        font-src 'self' https://fonts.gstatic.com;
                        connect-src *;
-                       img-src * data: blob: filesystem: android-webview-video-poster:;
+                       img-src * content: data: blob: filesystem: android-webview-video-poster:;
                        media-src * blob: filesystem:; frame-src *;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
