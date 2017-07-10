@@ -31,7 +31,7 @@ let%shared affect_to_uri () =
 
       let g (intent : Cordova_intent.intent) =
         match (Cordova_intent.action intent) with
-          "android.intent.action.SEND" ->
+        | "android.intent.action.SEND" ->
           uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
           if (Cordova_intent.type_ intent)="video/*" then
             begin
@@ -89,7 +89,8 @@ let%shared display_uri () =
     Eliom_content.Html.F.tr [
       Eliom_content.Html.F.td[Eliom_content.Html.D.img
                                 ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px; "] (* display:inline-block *)
-                                ~alt:"Ocsigen" ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
+                                ~alt:"Ocsigen"
+                                ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
   ]
 
 
@@ -152,11 +153,15 @@ let%shared page () =
                        begin
                          Lwt.return @@ Eliom_content.Html.F.table [
                            Eliom_content.Html.F.tr [
-                             Eliom_content.Html.F.td[Eliom_content.Html.D.video
-                                                       ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px; "; Eliom_content.Html.F.a_loop (); Eliom_content.Html.F.a_autoplay ()] (* display:inline-block *)
-                                                       ~src:(Eliom_content.Xml.uri_of_string !uri)
-                                                       []
-                                                    ]]
+                             Eliom_content.Html.F.td[
+                               Eliom_content.Html.D.video
+                                 ~a:[ Eliom_content.Html.F.a_style
+                                        "width:100px; height:100px; ";
+                                      Eliom_content.Html.F.a_loop ();
+                                      Eliom_content.Html.F.a_autoplay ()] (* display:inline-block *)
+                                 ~src:(Eliom_content.Xml.uri_of_string !uri)
+                                 []
+                             ]]
                          ]
 
                        end
@@ -164,9 +169,11 @@ let%shared page () =
                        begin
                          Lwt.return @@ Eliom_content.Html.F.table [
                            Eliom_content.Html.F.tr [
-                             Eliom_content.Html.F.td[Eliom_content.Html.D.img
-                                                       ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px; "]
-                                                       ~alt:"Ocsigen" ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
+                             Eliom_content.Html.F.td[
+                               Eliom_content.Html.D.img
+                                 ~a:[ Eliom_content.Html.F.a_style "width:100px;height:100px; "]
+                                 ~alt:"Ocsigen"
+                                 ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
                          ]
                        end
 
@@ -176,7 +183,8 @@ let%shared page () =
                            Eliom_content.Html.F.tr [
                              Eliom_content.Html.F.td[Eliom_content.Html.D.img
                                                        ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px; "]
-                                                       ~alt:"Ocsigen" ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
+                                                       ~alt:"Ocsigen"
+                                                       ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
                          ]
                        end
 
@@ -191,7 +199,10 @@ let%shared page () =
 
 
   Lwt.return Eliom_content.Html.[
-    F.p[btn1]
+    F.h1 [%i18n essai_intent_button]
+  ;F.p [F.pcdata [%i18n S.only_works_on_smartphone]]
+  ;F.p [%i18n essai_intent_explanation1]
+  ;F.p[btn1]
+  ;F.p [%i18n essai_intent_explanation2]
   ;F.p [button]
-
   ]

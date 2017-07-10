@@ -105,6 +105,7 @@ let%shared page () =
 
   Lwt.return Eliom_content.Html.[
     F.h1 [%i18n essai_contacts_button]
+  ; F.p [F.pcdata [%i18n S.only_works_on_smartphone]]
   ; F.p [F.pcdata [%i18n S.essai_contacts_button_description1]]
   ; F.p [btn1]
   ; F.p [F.pcdata [%i18n S.essai_contacts_button_description2]]

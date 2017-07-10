@@ -249,6 +249,7 @@ let%shared page () =
 
   Lwt.return Eliom_content.Html.[
     F.h1 [%i18n essai_calendar_button]
+  ; F.p [F.pcdata [%i18n S.only_works_on_smartphone]]
   ; F.p [F.pcdata [%i18n S.essai_calendar_button_description]]
   ; F.p [btn]
   ]
