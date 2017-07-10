@@ -30,6 +30,8 @@
         <icon src="res/android/icon-192.png" density="xxxhdpi" />
     </platform>
 
+
+
     <!-- iOS settings -->
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -78,16 +80,12 @@
          if you are facing trouble with old versions of Android (4.x
          and older). You may also want to enable the CrossWalk
          settings as they appear later in this file. -->
-    <!-- <plugin name="cordova-plugin-crosswalk-webview" spec="~1.6.0" /> -->
-    <plugin name="cordova-hot-code-push-plugin" spec="~1.5.1" />
-    <!-- <plugin name="cordova-plugin-facebook4" spec="~1.7.0"> -->
-    <!--     <variable name="APP_ID" value="%%FACEBOOK_ID%%" /> -->
-    <!--     <variable name="APP_NAME" value="%%MOBILE_APP_NAME%%" /> -->
-    <!-- </plugin> -->
-    <plugin name="cordova-plugin-network-information" spec="~1.2.0" />
-    <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
+
     <plugin name="cordova-plugin-contacts" spec="https://github.com/apache/cordova-plugin-contacts.git" />
+
     <plugin name="cordova-plugin-calendar" spec="https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git" />
+
+    <plugin name="cordova-custom-config" />
 
     <plugin name="cordova-plugin-intent" spec="https://github.com/krzischp/cordova-plugin-intent.git"/>
     <platform name="android">
@@ -107,6 +105,23 @@
         </intent-filter>
       </config-file>
     </platform>
+
+
+    <feature name="Calendar">
+    <param name="android-package" value="nl.xservices.plugins.Calendar" />
+    </feature>
+
+    <preference name="android-build-tool" value="gradle" />
+
+
+    <!-- <plugin name="cordova-plugin-crosswalk-webview" spec="~1.6.0" /> -->
+    <plugin name="cordova-hot-code-push-plugin" spec="~1.5.1" />
+    <!-- <plugin name="cordova-plugin-facebook4" spec="~1.7.0"> -->
+    <!--     <variable name="APP_ID" value="%%FACEBOOK_ID%%" /> -->
+    <!--     <variable name="APP_NAME" value="%%MOBILE_APP_NAME%%" /> -->
+    <!-- </plugin> -->
+    <plugin name="cordova-plugin-network-information" spec="~1.2.0" />
+    <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
 
     <!-- BEWARE OF ALL PLUGINS IN DEV VERSION: THEY ARE, BY DEFINITION, "UNSTABLE"!
          ALSO, IF YOU START A NEW PROJECT, YOU MIGHT WANT TO CHECK FOR THE LATEST VERSIONS OF NON-DEV VERSIONS! -->
