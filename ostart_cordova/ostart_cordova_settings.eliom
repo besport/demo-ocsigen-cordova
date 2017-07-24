@@ -13,7 +13,7 @@ let%shared update_main_email_button email =
       (fun _ _ ->
         let%lwt () = Os_current_user.update_main_email ~%email in
         Eliom_client.change_page
-          ~service:Ostart_contacts_services.settings_service () ()
+          ~service:Ostart_cordova_services.settings_service () ()
       )
   ) : unit) ];
   button
@@ -23,7 +23,7 @@ let%shared delete_email_button email =
   let open Eliom_content.Html in
   let button = D.button
       ~a:[D.a_class ["button" ; "os-remove-email-button"]]
-      [Ostart_contacts_icons.D.trash ()]
+      [Ostart_cordova_icons.D.trash ()]
   in
   ignore [%client (Lwt.async (fun () ->
     Lwt_js_events.clicks
@@ -31,7 +31,7 @@ let%shared delete_email_button email =
       (fun _ _ ->
         let%lwt () = Os_current_user.remove_email_from_user ~%email in
         Eliom_client.change_page
-          ~service:Ostart_contacts_services.settings_service () ()
+          ~service:Ostart_cordova_services.settings_service () ()
       )
   ) : unit) ];
   button
@@ -97,16 +97,16 @@ let%client get_emails =
 let%shared select_language_form =
   (fun select_language_name ->
      let open Eliom_content.Html in
-     let current_language = Ostart_contacts_i18n.get_language () in
+     let current_language = Ostart_cordova_i18n.get_language () in
      let all_languages_except_current =
        List.filter
          (fun l -> l <> current_language)
-         Ostart_contacts_i18n.languages
+         Ostart_cordova_i18n.languages
      in
      let form_option_of_language language is_current_language =
        D.Form.Option (
          [], (* No attributes *)
-         Ostart_contacts_i18n.string_of_language language,
+         Ostart_cordova_i18n.string_of_language language,
          None,
          is_current_language
        )
@@ -144,7 +144,7 @@ let%shared settings_content () =
         Os_user_view.upload_pic_link
           ~submit:([a_class ["button"]], [pcdata "Submit"])
           ~content:[%i18n change_profile_picture]
-          Ostart_contacts_services.upload_user_avatar_service;
+          Ostart_cordova_services.upload_user_avatar_service;
         br ();
         Os_user_view.reset_tips_link
           ~text_link:[%i18n S.see_help_again_from_beginning]

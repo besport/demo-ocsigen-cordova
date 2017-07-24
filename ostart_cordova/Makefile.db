@@ -19,7 +19,7 @@ export PGPORT     := $(DB_PORT)
 export PGUSER     := $(DB_USER)
 export PGPASSWORD := $(DB_PASSWORD)
 
-# Ocsigenserver uses the DB settings from ostart_contacts.conf.in (which
+# Ocsigenserver uses the DB settings from ostart_cordova.conf.in (which
 # should be the same as the exported variables above)
 OCSIGENSERVER     := $(OCSIGENSERVER)
 OCSIGENSERVER.OPT := $(OCSIGENSERVER.OPT)
@@ -145,7 +145,7 @@ db-upgrade:
 
 db-drop:
 	dropdb $(DB_NAME)
-	dropdb ocsipersist_ostart_contacts
+	dropdb ocsipersist_ostart_cordova
 
 db-psql:
 	psql $(DB_NAME)

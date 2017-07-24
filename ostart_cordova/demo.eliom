@@ -8,7 +8,7 @@
 (* drawer / demo welcome page ***********************************************)
 
 let%shared handler myid_o () () =
-  Ostart_contacts_container.page
+  Ostart_cordova_container.page
     ~a:[ a_class ["os-page-demo"] ]
     myid_o
     [ h2 [%i18n general_principles]
@@ -23,15 +23,15 @@ let%shared handler myid_o () () =
 
 let%shared () =
   let registerDemo (module D : Demo_tools.Page) =
-    Ostart_contacts_base.App.register
+    Ostart_cordova_base.App.register
       ~service:D.service
-      (Ostart_contacts_page.Opt.connected_page @@ fun myid_o () () ->
+      (Ostart_cordova_page.Opt.connected_page @@ fun myid_o () () ->
         let%lwt p = D.page () in
-        Ostart_contacts_container.page
+        Ostart_cordova_container.page
           ~a:[a_class [D.page_class]]
           myid_o p)
   in
   List.iter registerDemo Demo_tools.demos;
-  Ostart_contacts_base.App.register
-    ~service:Ostart_contacts_services.demo_service
-    (Ostart_contacts_page.Opt.connected_page handler)
+  Ostart_cordova_base.App.register
+    ~service:Ostart_cordova_services.demo_service
+    (Ostart_cordova_page.Opt.connected_page handler)

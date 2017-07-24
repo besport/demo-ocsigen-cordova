@@ -44,6 +44,6 @@ let drawer_contents () =
     ul ~a:[a_class ["os-drawer-submenu"]] (List.map make_link demos)
   in
   li [ a ~a:[ a_class ["os-drawer-item"] ]
-         ~service:Ostart_contacts_services.demo_service
+         ~service:Ostart_cordova_services.demo_service
          [%i18n demo_intro] ()
      ; submenu ]

@@ -9,8 +9,8 @@
 let upload_user_avatar_handler myid () ((), (cropping, photo)) =
   let avatar_dir =
     List.fold_left Filename.concat
-      (List.hd !Ostart_contacts_config.avatar_dir)
-      (List.tl !Ostart_contacts_config.avatar_dir) in
+      (List.hd !Ostart_cordova_config.avatar_dir)
+      (List.tl !Ostart_cordova_config.avatar_dir) in
   let%lwt avatar =
     Os_uploader.record_image avatar_dir ~ratio:1. ?cropping photo in
   let%lwt user = Os_user.user_of_userid myid in
@@ -38,7 +38,7 @@ let%client set_personal_data_handler =
 
 let%server forgot_password_handler =
   Os_handlers.forgot_password_handler
-    Ostart_contacts_services.settings_service
+    Ostart_cordova_services.settings_service
 
 let%client forgot_password_handler =
   let forgot_password_rpc =
@@ -97,8 +97,8 @@ let%shared action_link_handler myid_o akey () =
                        ]
                    ]
         in
-        Ostart_contacts_base.App.send
-          (Ostart_contacts_page.make_page (Os_page.content page))
+        Ostart_cordova_base.App.send
+          (Ostart_cordova_page.make_page (Os_page.content page))
       else
         let page = [ div
                        ~a:[ a_class ["login-signup-box"] ]
@@ -112,8 +112,8 @@ let%shared action_link_handler myid_o akey () =
                        ]
                    ]
         in
-        Ostart_contacts_base.App.send
-          (Ostart_contacts_page.make_page (Os_page.content page))
+        Ostart_cordova_base.App.send
+          (Ostart_cordova_page.make_page (Os_page.content page))
     else (*VVV In that case we must do something more complex. Check
                whether myid = userid and ask the user what he wants to
                do. *)
@@ -148,7 +148,7 @@ let%client preregister_handler =
   fun () -> preregister_rpc
 
 let%shared main_service_handler myid_o () () =
-  Ostart_contacts_container.page
+  Ostart_cordova_container.page
     ~a:[ a_class ["os-page-main"] ]
     myid_o (
     [ p [%i18n welcome_text1]
@@ -168,7 +168,7 @@ let%shared main_service_handler myid_o () () =
   )
 
 let%shared about_handler myid_o () () = Eliom_content.Html.F.(
-  Ostart_contacts_container.page
+  Ostart_cordova_container.page
     ~a:[ a_class ["os-page-about"] ]
     myid_o
     [ div
@@ -181,15 +181,15 @@ let%shared about_handler myid_o () () = Eliom_content.Html.F.(
 
 let%shared settings_handler myid_o () () =
   let%lwt content = match myid_o with
-    | Some _ -> Ostart_contacts_settings.settings_content ()
+    | Some _ -> Ostart_cordova_settings.settings_content ()
     | None -> Lwt.return [ p [%i18n log_in_to_see_page ~capitalize:true]]
   in
-  Ostart_contacts_container.page myid_o content
+  Ostart_cordova_container.page myid_o content
 
 let%server update_language_handler () language =
-  Os_session.connected_wrapper Ostart_contacts_language.update_language
-    (Ostart_contacts_i18n.language_of_string language)
+  Os_session.connected_wrapper Ostart_cordova_language.update_language
+    (Ostart_cordova_i18n.language_of_string language)
 
 let%client update_language_handler () language =
-  Ostart_contacts_i18n.(set_language (language_of_string language));
+  Ostart_cordova_i18n.(set_language (language_of_string language));
   Os_current_user.update_language language

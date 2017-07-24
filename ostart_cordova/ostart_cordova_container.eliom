@@ -19,7 +19,7 @@ let%shared os_header ?user () = Eliom_content.Html.F.(
     header ~a:[a_class ["os-page-header"]]
       [ a ~a:[a_class ["os-page-header-app-name"]]
           ~service:Os_services.main_service
-          [ pcdata Ostart_contacts_base.displayed_app_name ]
+          [ pcdata Ostart_cordova_base.displayed_app_name ]
           ()
       ; user_box
       ]
@@ -30,10 +30,10 @@ let%shared os_footer () = Eliom_content.Html.F.(
   footer ~a:[a_class ["os-page-footer"]] [
     p [
       pcdata [%i18n S.footer_generated];
-      a ~service:Ostart_contacts_services.os_github_service
+      a ~service:Ostart_cordova_services.os_github_service
         [ pcdata " Ocsigen Start " ] ();
       pcdata [%i18n S.footer_eliom_distillery];
-      a ~service:Ostart_contacts_services.ocsigen_service
+      a ~service:Ostart_cordova_services.ocsigen_service
         [ pcdata " Ocsigen " ] ();
       pcdata [%i18n S.footer_technology]
     ]
@@ -97,5 +97,5 @@ let%shared page ?html_a ?a ?title ?head myid_o content =
        [ h
        ; Eliom_content.Html.F.(div ~a:[a_class ["os-body"]] content)
        ; os_footer ()
-       ; Ostart_contacts_drawer.make ?user:me ()
+       ; Ostart_cordova_drawer.make ?user:me ()
        ])

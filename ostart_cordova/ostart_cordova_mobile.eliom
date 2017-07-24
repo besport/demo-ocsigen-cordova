@@ -4,7 +4,7 @@
 [%%client.start]
 
 [@@@ocaml.warning "-33"]
-open Ostart_contacts (* for dependency reasons *)
+open Ostart_cordova (* for dependency reasons *)
 [@@@ocaml.warning "+33"]
 
 (* This RPC is called when client application is initialized. This
@@ -18,7 +18,7 @@ let%server init_request _myid_o () =
   Lwt.return ()
 
 let%server init_request_rpc : (_, unit) Eliom_client.server_function =
-  Eliom_client.server_function ~name:"Ostart_contacts_mobile.init_request"
+  Eliom_client.server_function ~name:"Ostart_cordova_mobile.init_request"
     [%derive.json: unit]
     (Os_session.Opt.connected_rpc init_request)
 

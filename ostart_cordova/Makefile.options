@@ -1,10 +1,10 @@
 #----------------------------------------------------------------------
-#           SETTINGS FOR THE ELIOM PROJECT ostart_contacts
+#           SETTINGS FOR THE ELIOM PROJECT ostart_cordova
 #----------------------------------------------------------------------
 # Required binaries
 OPAM                  := opam
 
-PROJECT_NAME          := ostart_contacts
+PROJECT_NAME          := ostart_cordova
 
 ##----------------------------------------------------------------------
 ## The following part contains the settings for the compilation process like the
@@ -13,12 +13,12 @@ PROJECT_NAME          := ostart_contacts
 # Source files for the server. By default, it's all eliom, eliomi and ml files
 # in the project root directory.
 SERVER_FILES          := $(wildcard *.eliomi *.eliom *.ml) \
-                         ostart_contacts_i18n.eliom
+                         ostart_cordova_i18n.eliom
 
 # Source files for the client. By default, it's all eliom and eliomi files
 # in the project root directory.
 CLIENT_FILES          := $(wildcard *.eliomi *.eliom) \
-                         ostart_contacts_i18n.eliom
+                         ostart_cordova_i18n.eliom
 
 # OCamlfind packages for the server (for modules which defines services)
 SERVER_ELIOM_PACKAGES := ocsigen-start.server
@@ -178,13 +178,13 @@ CORDOVAPATH                    := cordova
 # config.xml.in, index.html.in, eliom_loader.ml, ...
 MOBILESTATICPATH               := mobile
 
-MOBILE_APP_ID                  := com.ostart_contacts.mobile
-MOBILE_APP_NAME                := ostart_contacts
+MOBILE_APP_ID                  := com.ostart_cordova.mobile
+MOBILE_APP_NAME                := ostart_cordova
 MOBILE_APP_VERSION             := 0.1
-MOBILE_DESCRIPTION             := ostart_contacts mobile application
+MOBILE_DESCRIPTION             := ostart_cordova mobile application
 MOBILE_AUTHOR_EMAIL            := developer@domain.com
 MOBILE_AUTHOR_HREF             := http://domain.com
-MOBILE_AUTHOR_DESCRIPTION      := ostart_contacts team
+MOBILE_AUTHOR_DESCRIPTION      := ostart_cordova team
 MOBILE_ANDROID_SDK_VERSION     := 15
 MOBILE_NOTIFICATIONS_SENDER_ID := 424242424242
 
@@ -200,7 +200,7 @@ DB_HOST               := localhost
 DB_PORT               := 3000
 
 ## The database name for the project. By default, it's the project name.
-DB_NAME               := ostart_contacts
+DB_NAME               := ostart_cordova
 
 ## The database user. By default, it will use the username of the current user.
 DB_USER               := $(USER)
@@ -214,7 +214,7 @@ PSQL_FILE             := $(DB_NAME).sql
 
 ## The filename for the database snapshot. This variable is used
 ## by 'db-snapshot'.
-DB_SNAPSHOT           := ostart_contacts-$$(date '+%Y%m%d%H%M%S').sql.gz
+DB_SNAPSHOT           := ostart_cordova-$$(date '+%Y%m%d%H%M%S').sql.gz
 
 ## Choose if the database will be installed locally or globally
 # - yes: will create the database in the $(TEST_PREFIX)/db (which has the value

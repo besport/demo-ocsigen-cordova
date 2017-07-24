@@ -15,18 +15,18 @@ let%server best_matched_language () =
   (* The first language of the list is returned. If the list is empty,
      the default language is returned. *)
   let rec aux = function
-    | (l, _) :: tl -> (try Ostart_contacts_i18n.guess_language_of_string l
-                       with Ostart_contacts_i18n.Unknown_language _ -> aux tl)
-    | [] -> Ostart_contacts_i18n.default_language
+    | (l, _) :: tl -> (try Ostart_cordova_i18n.guess_language_of_string l
+                       with Ostart_cordova_i18n.Unknown_language _ -> aux tl)
+    | [] -> Ostart_cordova_i18n.default_language
   in
   aux lang
 
 let%server update_language lang =
-  let language  = Ostart_contacts_i18n.string_of_language lang in
+  let language  = Ostart_cordova_i18n.string_of_language lang in
   let myid_o    = Os_current_user.Opt.get_current_userid () in
   (* Update the server and client values *)
-  Ostart_contacts_i18n.set_language lang;
-  ignore [%client (Ostart_contacts_i18n.set_language ~%lang : unit)];
+  Ostart_cordova_i18n.set_language lang;
+  ignore [%client (Ostart_cordova_i18n.set_language ~%lang : unit)];
   (* Update in the database if a user is connected *)
   match myid_o with
   | None -> Lwt.return ()
@@ -44,15 +44,15 @@ let%server _ =
        (* Set language according to user preferences. *)
        let%lwt language = match%lwt Os_user.get_language userid with
          | Some lang ->
-           Lwt.return (Ostart_contacts_i18n.guess_language_of_string lang)
+           Lwt.return (Ostart_cordova_i18n.guess_language_of_string lang)
          | None ->
            let%lwt best_language = best_matched_language () in
            ignore
              (Os_user.update_language
                 ~userid
-                ~language:(Ostart_contacts_i18n.string_of_language best_language));
+                ~language:(Ostart_cordova_i18n.string_of_language best_language));
            Lwt.return best_language
        in
-       Ostart_contacts_i18n.set_language language;
-       ignore [%client (Ostart_contacts_i18n.set_language ~%language : unit)];
+       Ostart_cordova_i18n.set_language language;
+       ignore [%client (Ostart_cordova_i18n.set_language ~%language : unit)];
        Lwt.return ())

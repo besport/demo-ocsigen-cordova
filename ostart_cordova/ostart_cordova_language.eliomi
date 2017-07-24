@@ -11,4 +11,4 @@
 (** [update_language language] updates the language (client and server
      side) for the current user with the value [language]. It also
      updates the value in the database if an user is connected.  *)
-val update_language : Ostart_contacts_i18n.t -> unit Lwt.t
+val update_language : Ostart_cordova_i18n.t -> unit Lwt.t

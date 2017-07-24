@@ -11,7 +11,7 @@
   end
 ]
 
-let%server css_name = !Ostart_contacts_config.css_name
+let%server css_name = !Ostart_cordova_config.css_name
 let%client css_name = try Js.to_string (Js.Unsafe.global##.___css_name_)
   with _ -> ""
 
@@ -23,7 +23,7 @@ let%client css_name_script = []
 (* Warning: either we use exactly the same global node (and make sure
    global nodes work properly on client side), or we do not add the
    script on client side.  We chose the second solution. *)
-let%server app_js = [Ostart_contacts_base.App.application_script ~defer:true ()]
+let%server app_js = [Ostart_cordova_base.App.application_script ~defer:true ()]
 let%client app_js = []
 
 let%server the_local_js = [
@@ -40,7 +40,7 @@ let%shared the_local_css = [
 
     include Os_page.Default_config
 
-    let title ="ostart_contacts"
+    let title ="ostart_cordova"
 
     let local_js = the_local_js
     let local_css = the_local_css
@@ -56,13 +56,13 @@ let%shared the_local_css = [
     let default_connected_predicate _ _ _ = Lwt.return true
 
     let default_error_page _ _ exn =
-      Ostart_contacts_container.page None
+      Ostart_cordova_container.page None
         (if Ocsigen_config.get_debugmode ()
          then [p [pcdata (Printexc.to_string exn)]]
          else [p [pcdata "Error"]])
 
     let default_connected_error_page myid_o _ _ exn =
-      Ostart_contacts_container.page myid_o
+      Ostart_cordova_container.page myid_o
         (if Ocsigen_config.get_debugmode ()
          then [p [pcdata (Printexc.to_string exn)]]
          else [p [pcdata "Error"]])
