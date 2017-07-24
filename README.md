@@ -45,9 +45,9 @@ Add in your `mobile/config.xml.in` file :
   
 ## Install the ocaml bindings
 ```
-opam pin add ocaml-cordova-plugin-intent.dev https://github.com/krzischp/ocaml-cordova-plugin-intent.git
-opam pin add ocaml-cordova-plugin-contacts.dev https://github.com/apache/cordova-plugin-contacts.git
-opam pin add cordova-ocaml-plugin-calendar.dev https://github.com/krzischp/cordova-ocaml-plugin-calendar.git
+opam -y pin add ocaml-cordova-plugin-intent.dev https://github.com/krzischp/ocaml-cordova-plugin-intent.git
+opam -y pin add ocaml-cordova-plugin-contacts.dev https://github.com/apache/cordova-plugin-contacts.git
+opam -y pin add cordova-ocaml-plugin-calendar.dev https://github.com/krzischp/cordova-ocaml-plugin-calendar.git
 ```
 
 And add in your `Makefile.options` to `CLIENT_PACKAGES` value:
