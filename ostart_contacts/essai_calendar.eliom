@@ -21,12 +21,9 @@ let%shared name () = [%i18n S.essai_calendar]
 (* Class for the page containing this demo (for internal use) *)
 let%shared page_class = "os-page-essai-calendar"
 
-
-
 (* a given types definition *)
 
 [%%client
-
 
   type eventid = int64
   type userid = int64
@@ -39,7 +36,6 @@ let%shared page_class = "os-page-essai-calendar"
 
   type blockid = int64
 
-
   module Event_date = struct
     type t = {
       startdate : CalendarLib.Calendar.t;
@@ -49,7 +45,6 @@ let%shared page_class = "os-page-essai-calendar"
       recurringdate : CalendarLib.Calendar.t option;
     }
   end
-
 
   type event =
     { eventid : eventid;
@@ -70,7 +65,7 @@ let%shared page_class = "os-page-essai-calendar"
       minp : int64 option;
       maxp : int64 option;
       parentevent: eventid option;
-      location: string; (*(spotid option * location) option;*********first suggested location*****)
+      location: string;
       result : string option;
       ancestors : (string * eventid) list;
       (* First is direct parent, last is root *)
@@ -208,7 +203,6 @@ let%shared add_event () =
 
     ] in
   Lwt.return ()
-
 
 let%shared button msg f =
   let btn =

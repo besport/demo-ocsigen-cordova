@@ -23,7 +23,6 @@ let%client send_intent_image v =
     val extras = Js.Unsafe.obj [|"android.intent.extra.STREAM", Js.Unsafe.inject (Js.string v)|]
     val requestCode = 1
   end in
-  Firebug.console##log s1;
   Js.Unsafe.global##.plugins##.intent##.startActivity s1
     (Js.wrap_callback (fun () ->  Firebug.console##log (Js.string "StartActivity success")))
     (Js.wrap_callback (fun () ->
@@ -39,7 +38,6 @@ let%client send_intent_text v =
     val extras = Js.Unsafe.obj [|"android.intent.extra.TEXT", Js.Unsafe.inject (Js.string w)|]
     val requestCode = 1
   end in
-  Firebug.console##log s1;
   Js.Unsafe.global##.plugins##.intent##.startActivity s1
     (Js.wrap_callback (fun () ->  Firebug.console##log (Js.string "StartActivity success")))
     (Js.wrap_callback (fun () ->
@@ -53,7 +51,6 @@ let%client send_intent_video v =
     val extras = Js.Unsafe.obj [|"android.intent.extra.STREAM", Js.Unsafe.inject (Js.string v)|]
     val requestCode = 1
   end in
-  Firebug.console##log s1;
   Js.Unsafe.global##.plugins##.intent##.startActivity s1
     (Js.wrap_callback (fun () ->  Firebug.console##log (Js.string "StartActivity success")))
     (Js.wrap_callback (fun () ->
@@ -100,18 +97,12 @@ let%shared page () =
     make_form "share an image"
       [%client
         ((fun v ->
-
-           let%lwt () =
-             if Essai_contacts.is_client_app () then
-               (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
-                send_intent_image v)
-             else
-               Eliom_lib.alert "You can't share an image from Ocsigen start: you need to be on the mobile app!";
-             Lwt.return ()
-           in
-
+           if Essai_contacts.is_client_app () then
+             (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
+              send_intent_image v)
+           else
+             Eliom_lib.alert "You can't share an image from Ocsigen start: you need to be on the mobile app!";
            Lwt.return ()
-
          )
          : string -> unit Lwt.t)
       ]
@@ -122,18 +113,12 @@ let%shared page () =
     make_form "share a text"
       [%client
         ((fun v ->
-
-           let%lwt () =
-             if Essai_contacts.is_client_app () then
-               (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
-                send_intent_text v)
-             else
-               Eliom_lib.alert "You can't share a text from Ocsigen start: you need to be on the mobile app!";
-             Lwt.return ()
-           in
-
+           if Essai_contacts.is_client_app () then
+             (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
+              send_intent_text v)
+           else
+             Eliom_lib.alert "You can't share a text from Ocsigen start: you need to be on the mobile app!";
            Lwt.return ()
-
          )
          : string -> unit Lwt.t)
       ]
@@ -143,18 +128,12 @@ let%shared page () =
     make_form "share a video"
       [%client
         ((fun v ->
-
-           let%lwt () =
-             if Essai_contacts.is_client_app () then
-               (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
-                send_intent_video "file:///storage/emulated/0/DCIM/Camera/VID_20170604_215820.mp4")
-             else
-               Eliom_lib.alert "You can't share a video from Ocsigen start: you need to be on the mobile app!";
-             Lwt.return ()
-           in
-
+           if Essai_contacts.is_client_app () then
+             (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
+              send_intent_video v)
+           else
+             Eliom_lib.alert "You can't share a video from Ocsigen start: you need to be on the mobile app!";
            Lwt.return ()
-
          )
          : string -> unit Lwt.t)
       ]
