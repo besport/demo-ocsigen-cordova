@@ -77,13 +77,8 @@ let%server _ =
   then begin
     ignore
       [%client (
-        (* Eliom_config.debug_timings := true; *)
-        (* Lwt_log_core.add_rule "eliom:client*" Lwt_log.Debug; *)
-        (* Lwt_log_core.add_rule "os*" Lwt_log.Debug; *)
         Lwt_log_core.add_rule "Ostart_cordova*" Lwt_log.Debug
-        (* Lwt_log_core.add_rule "*" Lwt_log.Debug *)
         : unit ) ];
     Essai_intent.affect_to_uri ();
-    (* Lwt_log_core.add_rule "*" Lwt_log.Debug *)
     Lwt_log_core.add_rule "Ostart_cordova*" Lwt_log.Debug
   end

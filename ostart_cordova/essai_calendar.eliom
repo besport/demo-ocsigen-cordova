@@ -140,7 +140,7 @@ let%shared add_event () =
 
           let success_function msg = Eliom_lib.alert "%s%!" "createEventWithOptions is a Success"
           in
-          let error_function msg =  Eliom_lib.alert "%s%!" "createEventWithOptions is a Failure"
+          let error_function msg =  Eliom_lib.alert "%s%!" "createEventWithOptions is a Failure: "
           in
 
           let year2 = CalendarLib.Calendar.year date.startdate in
