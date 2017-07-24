@@ -34,19 +34,19 @@ let%shared page_class = "os-page-essai-contacts"
 (*Contacts list*)
 let%client myList = ref []
 (* function that prints the whole contacts list *)
-let%shared print_contacts () =
+let%shared print_contacts msg =
   let _ : unit Eliom_client_value.t =
     [%client
       let rec print_list l = match l with
         | [] -> ()
         | a::ll ->
-          print_endline a;
+          Manip.appendChild ~%msg (p [pcdata a]);
           print_list ll
       in
-
+      Manip.removeChildren ~%msg;
       print_list !myList;
     ] in
-  Lwt.return()
+  Lwt.return ()
 
 
 
@@ -105,11 +105,13 @@ let%shared page () =
       ]
   in
 
+  let msg = D.div [] in
+
   let btn2 =
     button [%i18n S.essai_contacts_click2]
       [%client
         ((fun () ->
-           print_contacts ();
+           print_contacts ~%msg;
            Lwt.return ())
          : unit -> unit Lwt.t)
       ]
@@ -122,4 +124,5 @@ let%shared page () =
   ; F.p [btn1]
   ; F.p [F.pcdata [%i18n S.essai_contacts_button_description2]]
   ; F.p [btn2]
+  ; msg
   ]
