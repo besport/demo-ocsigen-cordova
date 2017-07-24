@@ -12,26 +12,26 @@ make run-android
   
 # Install the necessary plugins  
 To write in your xml file :  
-<plugin name="cordova-plugin-contacts" spec="https://github.com/apache/cordova-plugin-contacts.git" />  
-<plugin name="cordova-plugin-calendar" spec="https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git" />  
-<plugin name="cordova-plugin-intent" spec="https://github.com/krzischp/cordova-plugin-intent.git"/>  
-<platform name="android">  
-<config-file target="AndroidManifest.xml" parent="./application/activity/[@android:name='MainActivity']"  
-             xmlns:android="http://schemas.android.com/apk/res/android">
-     <intent-filter>  
-       <action android:name="android.intent.action.SEND"/>  
-       <category android:name="android.intent.category.DEFAULT"/>  
-       <data android:mimeType="text/plain"/>  
-     </intent-filter>  
-     <intent-filter>  
-       <action android:name="android.intent.action.SEND" />  
-       <action android:name="android.intent.action.SEND_MULTIPLE" />  
-       <category android:name="android.intent.category.DEFAULT" />  
-       <data android:mimeType="image/*" />  
-       <data android:mimeType="video/*" />  
-     </intent-filter>  
-   </config-file>  
-</platform>  
+  <plugin name="cordova-plugin-contacts" spec="https://github.com/apache/cordova-plugin-contacts.git" />  
+  <plugin name="cordova-plugin-calendar" spec="https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git" />  
+  <plugin name="cordova-plugin-intent" spec="https://github.com/krzischp/cordova-plugin-intent.git"/>  
+  <platform name="android">  
+  <config-file target="AndroidManifest.xml" parent="./application/activity/[@android:name='MainActivity']"  
+               xmlns:android="http://schemas.android.com/apk/res/android">
+       <intent-filter>  
+         <action android:name="android.intent.action.SEND"/>  
+         <category android:name="android.intent.category.DEFAULT"/>  
+         <data android:mimeType="text/plain"/>  
+       </intent-filter>  
+       <intent-filter>  
+         <action android:name="android.intent.action.SEND" />  
+         <action android:name="android.intent.action.SEND_MULTIPLE" />  
+         <category android:name="android.intent.category.DEFAULT" />  
+         <data android:mimeType="image/*" />  
+         <data android:mimeType="video/*" />  
+       </intent-filter>  
+     </config-file>  
+  </platform>  
   
 # Install the ocaml bindings :
 opam pin add ocaml-cordova-plugin-intent.dev https://github.com/krzischp/ocaml-cordova-plugin-intent.git  
