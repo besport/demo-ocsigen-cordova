@@ -72,7 +72,11 @@ let%shared button msg f =
   btn
 
 let%shared make_form msg f =
-  let inp = Eliom_content.Html.D.Raw.input ()
+  let inp = Eliom_content.Html.D.Raw.input
+      ~a:[
+        Eliom_content.Html.F.a_input_type `Text
+      ; Eliom_content.Html.F.a_style "border: solid 1px #666"]
+      ()
   and btn = Eliom_content.Html.(
     D.button ~a:[D.a_class ["button"]] [D.pcdata msg]
   ) in
