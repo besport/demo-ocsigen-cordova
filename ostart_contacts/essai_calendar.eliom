@@ -1,4 +1,3 @@
-
 (* Calendar demo *)
 
 [%%shared
@@ -24,7 +23,7 @@ let%shared page_class = "os-page-essai-calendar"
 
 
 
-(*besport types definition *)
+(*a given types definition *)
 
 [%%client
 
@@ -85,133 +84,131 @@ let%shared page_class = "os-page-essai-calendar"
 
 ]
 
-(*besport types definition: end *)
-
-
-(* function that adds a new event with default besport parameters you can interactively change*)
+(* function that adds a new event with default parameters you can interactively change*)
 let%shared add_event () =
 
   let _ : unit Eliom_client_value.t =
     [%client
 
-       (*instantiation of an event*)
-       let photoInfo = {photo_name = "nice picture"; width = 30; height = 30; s3 = true} in
-       let sportIdList = [Int64.one;Int64.one;Int64.one;Int64.one] in
-       let myClubs = [(Int64.one,"Hayasa",true);(Int64.one,"GMT",true)] in
-       let eventDate = {Event_date.startdate = CalendarLib.Calendar.now ();enddate = CalendarLib.Calendar.now (); allday = true; multitimeslot = true; recurringdate = Some (CalendarLib.Calendar.now ()) } in
-       let myDescription = Some "default description" in
-       let myMinp = Some Int64.one in
-       let myMaxp = Some Int64.one in
-       let parentEvent = Some Int64.one in
-       let myResult = Some "result" in
-       let myAncestors = [("ancestor1",Int64.one);("ancestor2",Int64.one)] in
-       let myReminder = Some Int64.one in
+      if Essai_contacts.is_client_app () then
+        begin
+        (*instantiation of an event*)
+        let photoInfo = {photo_name = "nice picture"; width = 30; height = 30; s3 = true} in
+        let sportIdList = [Int64.one;Int64.one;Int64.one;Int64.one] in
+        let myClubs = [(Int64.one,"Hayasa",true);(Int64.one,"GMT",true)] in
+        let eventDate = {Event_date.startdate = CalendarLib.Calendar.now ();enddate = CalendarLib.Calendar.now (); allday = true; multitimeslot = true; recurringdate = Some (CalendarLib.Calendar.now ()) } in
+        let myDescription = Some "default description" in
+        let myMinp = Some Int64.one in
+        let myMaxp = Some Int64.one in
+        let parentEvent = Some Int64.one in
+        let myResult = Some "result" in
+        let myAncestors = [("ancestor1",Int64.one);("ancestor2",Int64.one)] in
+        let myReminder = Some Int64.one in
 
-       let ev = {eventid = Int64.one ;authorid =Some Int64.one;clubid=Some Int64.one;title="default title";public=true;open_participation=true;invitees_can_invite=true;picture=photoInfo;coverposition=3.0;wallid=Int64.one;sports=sportIdList;clubs=myClubs;
-                 creationdate=CalendarLib.Calendar.now (); date=eventDate; description=myDescription; minp=myMinp; maxp=myMaxp; parentevent=parentEvent; location="Besport's office"; result=myResult; ancestors=myAncestors; weight=40.0; reminder=myReminder; live=true; blockid=Int64.one}
+        let ev = {eventid = Int64.one ;authorid =Some Int64.one;clubid=Some Int64.one;title="default title";public=true;open_participation=true;invitees_can_invite=true;picture=photoInfo;coverposition=3.0;wallid=Int64.one;sports=sportIdList;clubs=myClubs;
+                  creationdate=CalendarLib.Calendar.now (); date=eventDate; description=myDescription; minp=myMinp; maxp=myMaxp; parentevent=parentEvent; location="Besport's office"; result=myResult; ancestors=myAncestors; weight=40.0; reminder=myReminder; live=true; blockid=Int64.one}
 
-       in
+        in
+              (*the function to convert a besport event into an Android calendar event*)
+        let besport_to_agenda eventid title open_participation (creationdate:CalendarLib.Calendar.t) (date:Event_date.t) description location reminder =
 
+          let notes = ref "" in
+          let year = string_of_int (CalendarLib.Calendar.year creationdate) in
+          let month = CalendarLib.Calendar.month creationdate in
+          let myMonth =
 
-       (*the function to convert a besport event into an Android calendar event*)
-    let besport_to_agenda eventid title open_participation (creationdate:CalendarLib.Calendar.t) (date:Event_date.t) description location reminder =
+            match month with
+            | 	Jan -> "1"
+            | 	Feb -> "2"
+            | 	Mar -> "3"
+            | 	Apr -> "4"
+            | 	May -> "5"
+            | 	Jun -> "6"
+            | 	Jul -> "7"
+            | 	Aug -> "8"
+            | 	Sep -> "9"
+            | 	Oct -> "10"
+            | 	Nov -> "11"
+            | 	Dec -> "12"
+          in
 
-      let notes = ref "" in
-      let year = string_of_int (CalendarLib.Calendar.year creationdate) in
-      let month = CalendarLib.Calendar.month creationdate in
-      let myMonth =
+          let day = string_of_int (CalendarLib.Calendar.day_of_month creationdate) in
+          notes := !notes ^ "-This event was created the " ^ myMonth ^ "/" ^ day ^ "/" ^ year ^ ".\n" ;
+          notes := !notes ^ "-";
 
-      match month with
-      | 	Jan -> "1"
-      | 	Feb -> "2"
-      | 	Mar -> "3"
-      | 	Apr -> "4"
-      | 	May -> "5"
-      | 	Jun -> "6"
-      | 	Jul -> "7"
-      | 	Aug -> "8"
-      | 	Sep -> "9"
-      | 	Oct -> "10"
-      | 	Nov -> "11"
-      | 	Dec -> "12"
-      in
+          let myDescription =
+            match description with
+            |Some x ->  x
+            |_ -> ""
+          in
 
-      let day = string_of_int (CalendarLib.Calendar.day_of_month creationdate) in
-      notes := !notes ^ "-This event was created the " ^ myMonth ^ "/" ^ day ^ "/" ^ year ^ ".\n" ;
-      notes := !notes ^ "-";
+          notes := !notes ^ myDescription;
 
-      let myDescription =
-      match description with
-        |Some x ->  x
-        |_ -> ""
-      in
+          let url = "https://www.besport.com/event/" ^ (Int64.to_string eventid) in
 
+          let success_function msg = Eliom_lib.alert "%s%!" "createEventWithOptions is a Success"
+          in
+          let error_function msg =  Eliom_lib.alert "%s%!" "createEventWithOptions is a Failure"
+          in
 
-      notes := !notes ^ myDescription;
+          let year2 = CalendarLib.Calendar.year date.startdate in
+          let day2 = CalendarLib.Calendar.day_of_month date.startdate in
+          let month2 = CalendarLib.Calendar.month date.startdate in
+          let myMonth2 =
 
-      let url = "https://www.besport.com/event/" ^ (Int64.to_string eventid) in
+            match month2 with
+            | 	Jan -> 1
+            | 	Feb -> 2
+            | 	Mar -> 3
+            | 	Apr -> 4
+            | 	May -> 5
+            | 	Jun -> 6
+            | 	Jul -> 7
+            | 	Aug -> 8
+            | 	Sep -> 9
+            | 	Oct -> 10
+            | 	Nov -> 11
+            | 	Dec -> 12
+          in
 
+          let startDate =  Js_date.create ~year:year2 ~month:myMonth2 ~day:day2 () in
+          let year3 = CalendarLib.Calendar.year date.enddate in
+          let day3 = CalendarLib.Calendar.day_of_month date.enddate in
+          let month3 = CalendarLib.Calendar.month date.enddate in
+          let myMonth3 =
 
-      let success_function msg = Eliom_lib.alert "%s%!" "createEventWithOptions is a Success"
-      in
-      let error_function msg =  Eliom_lib.alert "%s%!" "createEventWithOptions is a Failure"
-      in
+            match month3 with
+            | 	Jan -> 1
+            | 	Feb -> 2
+            | 	Mar -> 3
+            | 	Apr -> 4
+            | 	May -> 5
+            | 	Jun -> 6
+            | 	Jul -> 7
+            | 	Aug -> 8
+            | 	Sep -> 9
+            | 	Oct -> 10
+            | 	Nov -> 11
+            | 	Dec -> 12
+          in
 
-      let year2 = CalendarLib.Calendar.year date.startdate in
-      let day2 = CalendarLib.Calendar.day_of_month date.startdate in
-      let month2 = CalendarLib.Calendar.month date.startdate in
-      let myMonth2 =
+          let endDate =  Js_date.create ~year:year3 ~month:myMonth3 ~day:day3 () in
 
-      match month2 with
-      | 	Jan -> 1
-      | 	Feb -> 2
-      | 	Mar -> 3
-      | 	Apr -> 4
-      | 	May -> 5
-      | 	Jun -> 6
-      | 	Jul -> 7
-      | 	Aug -> 8
-      | 	Sep -> 9
-      | 	Oct -> 10
-      | 	Nov -> 11
-      | 	Dec -> 12
-      in
+          let myReminder = match reminder with
+            |Some x -> Int64.to_int x
+            | _     ->  0
+          in
+          let myOptions = Cordova_calendar.create_options ~first_reminder_minutes:myReminder ~url:url () in
 
-      let startDate =  Js_date.create ~year:year2 ~month:myMonth2 ~day:day2 () in
+          Cordova_calendar.createEventInteractivelyWithOptions ~title:title ~location:location ~notes:!notes ~start_date:startDate ~end_date:endDate ~cal_options:myOptions success_function error_function
 
-      let year3 = CalendarLib.Calendar.year date.enddate in
-      let day3 = CalendarLib.Calendar.day_of_month date.enddate in
-      let month3 = CalendarLib.Calendar.month date.enddate in
-      let myMonth3 =
+        in
+        besport_to_agenda ev.eventid ev.title ev.open_participation ev.creationdate ev.date ev.description ev.location ev.reminder;
+      end else
+        begin
+          Eliom_lib.alert "You can't export an event: you need to use the mobile application!"
+        end
 
-      match month3 with
-      | 	Jan -> 1
-      | 	Feb -> 2
-      | 	Mar -> 3
-      | 	Apr -> 4
-      | 	May -> 5
-      | 	Jun -> 6
-      | 	Jul -> 7
-      | 	Aug -> 8
-      | 	Sep -> 9
-      | 	Oct -> 10
-      | 	Nov -> 11
-      | 	Dec -> 12
-      in
-
-      let endDate =  Js_date.create ~year:year3 ~month:myMonth3 ~day:day3 () in
-
-      let myReminder = match reminder with
-      |Some x -> Int64.to_int x
-      | _     ->  0
-      in
-      let myOptions = Cordova_calendar.create_options ~first_reminder_minutes:myReminder ~url:url () in
-
-      Cordova_calendar.createEventInteractivelyWithOptions ~title:title ~location:location ~notes:!notes ~start_date:startDate ~end_date:endDate ~cal_options:myOptions success_function error_function
-
-    in
-
-    besport_to_agenda ev.eventid ev.title ev.open_participation ev.creationdate ev.date ev.description ev.location ev.reminder;
     ] in
   Lwt.return ()
 

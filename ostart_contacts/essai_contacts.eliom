@@ -21,7 +21,15 @@ let%shared name () = [%i18n S.essai_contacts]
 (* Class for the page containing this demo (for internal use) *)
 let%shared page_class = "os-page-essai-contacts"
 
+(*Functions to verify you're on the mobile app or not*)
+[%%client
+  let has uA s = uA##indexOf(Js.string s) <> -1
+  let is_android () =
+    let uA = Dom_html.window##.navigator##.userAgent in
+    (has uA "Android")
 
+  let is_client_app () = Eliom_client.is_client_app ()
+]
 
 (*Contacts list*)
 let%client myList = ref []
@@ -47,18 +55,22 @@ let%shared add_contact () =
 
   let _ : unit Eliom_client_value.t =
     [%client
-      let contact myContact=
-        let head =
-          match Cordova_contacts.Contact.phone_numbers myContact with
-          | Some(x::_) -> x
-          | _ -> raise (Failure "empty")
-        in
-        myList := (Cordova_contacts.ContactField.value head)::(!myList);
-        Eliom_lib.alert "%s%!" (Cordova_contacts.ContactField.value head);
-
-
-      in
-      Cordova_contacts.Contacts.pick_contact contact;
+      if is_client_app () then
+        begin
+          let contact myContact=
+            let head =
+              match Cordova_contacts.Contact.phone_numbers myContact with
+              | Some(x::_) -> x
+              | _ -> raise (Failure "empty")
+            in
+            myList := (Cordova_contacts.ContactField.value head)::(!myList);
+            Eliom_lib.alert "%s%!" (Cordova_contacts.ContactField.value head);
+          in
+          Cordova_contacts.Contacts.pick_contact contact;
+        end else
+        begin
+          Eliom_lib.alert "You can't add a contact: you need to use the mobile application!"
+        end
     ] in
   Lwt.return ()
 

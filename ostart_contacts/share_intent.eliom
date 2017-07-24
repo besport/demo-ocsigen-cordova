@@ -102,8 +102,11 @@ let%shared page () =
         ((fun v ->
 
            let%lwt () =
-             (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
-              send_intent_image v);
+             if Essai_contacts.is_client_app () then
+               (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
+                send_intent_image v)
+             else
+               Eliom_lib.alert "You can't share an image from Ocsigen start: you need to be on the mobile app!";
              Lwt.return ()
            in
 
@@ -121,8 +124,11 @@ let%shared page () =
         ((fun v ->
 
            let%lwt () =
-             (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
-              send_intent_text v);
+             if Essai_contacts.is_client_app () then
+               (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
+                send_intent_text v)
+             else
+               Eliom_lib.alert "You can't share a text from Ocsigen start: you need to be on the mobile app!";
              Lwt.return ()
            in
 
@@ -139,8 +145,11 @@ let%shared page () =
         ((fun v ->
 
            let%lwt () =
-             (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
-              send_intent_video "file:///storage/emulated/0/DCIM/Camera/VID_20170604_215820.mp4");
+             if Essai_contacts.is_client_app () then
+               (Cordova_intent.addEventListener "deviceReady" @@ fun () ->
+                send_intent_video "file:///storage/emulated/0/DCIM/Camera/VID_20170604_215820.mp4")
+             else
+               Eliom_lib.alert "You can't share a video from Ocsigen start: you need to be on the mobile app!";
              Lwt.return ()
            in
 
