@@ -23,7 +23,7 @@ let%shared page_class = "os-page-essai-calendar"
 
 
 
-(*a given types definition *)
+(* a given types definition *)
 
 [%%client
 
@@ -79,12 +79,9 @@ let%shared page_class = "os-page-essai-calendar"
       live: bool ;
       blockid : blockid
     }
-
-
-
 ]
 
-(* function that adds a new event with default parameters you can interactively change*)
+(* function that adds a new event with default parameters you can interactively change *)
 let%shared add_event () =
 
   let _ : unit Eliom_client_value.t =
@@ -118,18 +115,18 @@ let%shared add_event () =
           let myMonth =
 
             match month with
-            | 	Jan -> "1"
-            | 	Feb -> "2"
-            | 	Mar -> "3"
-            | 	Apr -> "4"
-            | 	May -> "5"
-            | 	Jun -> "6"
-            | 	Jul -> "7"
-            | 	Aug -> "8"
-            | 	Sep -> "9"
-            | 	Oct -> "10"
-            | 	Nov -> "11"
-            | 	Dec -> "12"
+            | Jan -> "1"
+            | Feb -> "2"
+            | Mar -> "3"
+            | Apr -> "4"
+            | May -> "5"
+            | Jun -> "6"
+            | Jul -> "7"
+            | Aug -> "8"
+            | Sep -> "9"
+            | Oct -> "10"
+            | Nov -> "11"
+            | Dec -> "12"
           in
 
           let day = string_of_int (CalendarLib.Calendar.day_of_month creationdate) in
@@ -138,8 +135,8 @@ let%shared add_event () =
 
           let myDescription =
             match description with
-            |Some x ->  x
-            |_ -> ""
+            | Some x ->  x
+            | _ -> ""
           in
 
           notes := !notes ^ myDescription;
@@ -157,18 +154,18 @@ let%shared add_event () =
           let myMonth2 =
 
             match month2 with
-            | 	Jan -> 1
-            | 	Feb -> 2
-            | 	Mar -> 3
-            | 	Apr -> 4
-            | 	May -> 5
-            | 	Jun -> 6
-            | 	Jul -> 7
-            | 	Aug -> 8
-            | 	Sep -> 9
-            | 	Oct -> 10
-            | 	Nov -> 11
-            | 	Dec -> 12
+            | Jan -> 1
+            | Feb -> 2
+            | Mar -> 3
+            | Apr -> 4
+            | May -> 5
+            | Jun -> 6
+            | Jul -> 7
+            | Aug -> 8
+            | Sep -> 9
+            | Oct -> 10
+            | Nov -> 11
+            | Dec -> 12
           in
 
           let startDate =  Js_date.create ~year:year2 ~month:myMonth2 ~day:day2 () in
@@ -178,25 +175,25 @@ let%shared add_event () =
           let myMonth3 =
 
             match month3 with
-            | 	Jan -> 1
-            | 	Feb -> 2
-            | 	Mar -> 3
-            | 	Apr -> 4
-            | 	May -> 5
-            | 	Jun -> 6
-            | 	Jul -> 7
-            | 	Aug -> 8
-            | 	Sep -> 9
-            | 	Oct -> 10
-            | 	Nov -> 11
-            | 	Dec -> 12
+            | Jan -> 1
+            | Feb -> 2
+            | Mar -> 3
+            | Apr -> 4
+            | May -> 5
+            | Jun -> 6
+            | Jul -> 7
+            | Aug -> 8
+            | Sep -> 9
+            | Oct -> 10
+            | Nov -> 11
+            | Dec -> 12
           in
 
           let endDate =  Js_date.create ~year:year3 ~month:myMonth3 ~day:day3 () in
 
           let myReminder = match reminder with
-            |Some x -> Int64.to_int x
-            | _     ->  0
+          | Some x -> Int64.to_int x
+          | _      ->  0
           in
           let myOptions = Cordova_calendar.create_options ~first_reminder_minutes:myReminder ~url:url () in
 
@@ -211,8 +208,6 @@ let%shared add_event () =
 
     ] in
   Lwt.return ()
-
-
 
 
 let%shared button msg f =
@@ -231,8 +226,6 @@ let%shared button msg f =
 
 (* Page for this demo *)
 let%shared page () =
-
-
   let btn =
     button [%i18n S.essai_calendar_click]
       [%client
@@ -242,8 +235,6 @@ let%shared page () =
          : unit -> unit Lwt.t)
       ]
   in
-
-
   Lwt.return Eliom_content.Html.[
     F.h1 [%i18n essai_calendar_button]
   ; F.p [F.pcdata [%i18n S.only_works_on_smartphone]]

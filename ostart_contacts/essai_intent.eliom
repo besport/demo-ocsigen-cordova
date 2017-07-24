@@ -15,7 +15,7 @@ let%shared name () = [%i18n S.essai_intent_button]
 let%shared page_class = "os-page-essai-intent"
 
 
-let%client l = ref []
+(* let%client l = ref [] *)
 let%shared uri = ref ""
 let%shared is_video = ref false
 let%shared is_image = ref false
@@ -45,12 +45,12 @@ let%shared affect_to_uri () =
               is_video := false;
               is_text := false;
             end
-            (* else if (Cordova_intent.type_ intent)="text/*" then
-               begin
-                is_image := false;
-                is_video := false;
-                is_text := true;
-               end *)
+          else if (Cordova_intent.type_ intent)="text/*" then
+            begin
+              is_image := false;
+              is_video := false;
+              is_text := true;
+            end
           else
             begin
               is_image := false;
@@ -58,21 +58,19 @@ let%shared affect_to_uri () =
               is_text := false;
             end
 
-        (* print_endline !uri *)
-
         (* |"android.intent.action.SEND_TEXT" ->
-           uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 )) ;
-           print_endline !uri *)
-        |"android.intent.action.SEND_MULTIPLE" ->
+           uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ))  *)
+        (* | "android.intent.action.SEND_MULTIPLE" ->
           let my_array = Cordova_intent.clipItems intent in
           for i=0 to (Array.length my_array) - 1 do
             l := (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) i ))::!l;
-          done;
-        |"android.intent.action.DEFAULT" ->
+          done; *)
+        | "android.intent.action.DEFAULT" ->
           is_image := false;
           is_video := false;
+          is_text := false;
           uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
-          print_endline !uri
+        | _ -> assert false
 
 
       in
@@ -87,10 +85,11 @@ let%shared affect_to_uri () =
 let%shared display_uri () =
   Eliom_content.Html.F.table [
     Eliom_content.Html.F.tr [
-      Eliom_content.Html.F.td[Eliom_content.Html.D.img
-                                ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px; "] (* display:inline-block *)
-                                ~alt:"Ocsigen"
-                                ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
+      Eliom_content.Html.F.td [
+        Eliom_content.Html.D.img
+          ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px;" ] (* display:inline-block *)
+          ~alt:"Ocsigen"
+          ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
   ]
 
 
@@ -146,7 +145,7 @@ let%shared page () =
                              Eliom_content.Html.F.td[
                                Eliom_content.Html.D.video
                                  ~a:[ Eliom_content.Html.F.a_style
-                                        "width:100px; height:100px; ";
+                                        "width:100px; height:100px;";
                                       Eliom_content.Html.F.a_loop ();
                                       Eliom_content.Html.F.a_autoplay ()] (* display:inline-block *)
                                  ~src:(Eliom_content.Xml.uri_of_string !uri)
@@ -161,7 +160,7 @@ let%shared page () =
                            Eliom_content.Html.F.tr [
                              Eliom_content.Html.F.td[
                                Eliom_content.Html.D.img
-                                 ~a:[ Eliom_content.Html.F.a_style "width:100px;height:100px; "]
+                                 ~a:[ Eliom_content.Html.F.a_style "width:100px;height:100px;" ]
                                  ~alt:"Ocsigen"
                                  ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
                          ]
@@ -172,7 +171,7 @@ let%shared page () =
                          Lwt.return @@ Eliom_content.Html.F.table [
                            Eliom_content.Html.F.tr [
                              Eliom_content.Html.F.td[Eliom_content.Html.D.img
-                                                       ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px; "]
+                                                       ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px;" ]
                                                        ~alt:"Ocsigen"
                                                        ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
                          ]
