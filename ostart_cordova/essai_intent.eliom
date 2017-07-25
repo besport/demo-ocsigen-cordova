@@ -32,21 +32,23 @@ let%shared affect_to_uri () =
       let g (intent : Cordova_intent.intent) =
         match (Cordova_intent.action intent) with
         | "android.intent.action.SEND" ->
-          uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
           if (Cordova_intent.type_ intent)="video/*" then
             begin
+              uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
               is_video := true;
               is_image := false;
               is_text := false;
             end
           else if (Cordova_intent.type_ intent)="image/*" then
             begin
+              uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
               is_image := true;
               is_video := false;
               is_text := false;
             end
-          else if (Cordova_intent.type_ intent)="text/*" then
+          else if (Cordova_intent.type_ intent)="text/plain" || (Cordova_intent.type_ intent)="text/*" then
             begin
+              uri:= (Cordova_intent.text_ (Array.get (Cordova_intent.clipItems intent) 0 ));
               is_image := false;
               is_video := false;
               is_text := true;
@@ -58,8 +60,14 @@ let%shared affect_to_uri () =
               is_text := false;
             end
 
-        (* |"android.intent.action.SEND_TEXT" ->
-           uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ))  *)
+        |"android.intent.action.SEND_TEXT" ->
+          if (Cordova_intent.type_ intent)="text/plain" || (Cordova_intent.type_ intent)="text/*" then
+          begin
+            uri:= (Cordova_intent.text_ (Array.get (Cordova_intent.clipItems intent) 0 ));
+            is_image := false;
+            is_video := false;
+            is_text := true;
+          end
         (* | "android.intent.action.SEND_MULTIPLE" ->
           let my_array = Cordova_intent.clipItems intent in
           for i=0 to (Array.length my_array) - 1 do
@@ -69,7 +77,6 @@ let%shared affect_to_uri () =
           is_image := false;
           is_video := false;
           is_text := false;
-          uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
         | _ -> assert false
 
 
@@ -163,6 +170,17 @@ let%shared page () =
                                  ~a:[ Eliom_content.Html.F.a_style "width:100px;height:100px;" ]
                                  ~alt:"Ocsigen"
                                  ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
+                         ]
+                       end
+
+                     else if !is_text then
+                       begin
+                         Lwt.return @@ Eliom_content.Html.F.table [
+                           Eliom_content.Html.F.tr [
+                             Eliom_content.Html.F.td[
+                               Eliom_content.Html.F.pcdata !uri
+                             ]
+                           ]
                          ]
                        end
 
