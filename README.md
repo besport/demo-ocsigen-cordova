@@ -2,11 +2,11 @@
 Demo app for accessing contacts from an Eliom mobile app
 ## how to compile
 ```
-make db-init
-make db-start
-make db-create
-make db-schema
-make test.byte
+make db-init     # - only once, to create the database files on the filesystem;
+make db-start    # - to launch the database server;
+make db-create   # - to create the tables in the database server
+make db-schema   # - to import the project's SQL file
+make test.byte   # - to compile the project and to launch the web server
 ```
 
 ## Install on your android/iOS device
