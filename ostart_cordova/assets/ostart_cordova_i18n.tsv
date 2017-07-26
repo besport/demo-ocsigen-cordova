@@ -171,7 +171,7 @@ essai_contacts_button_description1	This button adds a chosen contact to the list
 essai_contacts_button_description2	This button prints the contacts list in the console. You have to inspect your application to see the list.	Ce bouton imprime la liste de contacts dans la console. Vous devez inspecter l'application pour rendre l'impression de la liste visible.
 essai_contacts_button	Pick a contact.	Selectionne un contact.
 essai_calendar_button	Export besport event to android calendar.	Exporter un évènement besport vers le calendrier d'android.
-essai_calendar	Move an event from besport to Android calendar.	Déplacer un évènement de besport vers le calendrier d'Android.
+essai_calendar	Move an event from besport to Android calendar	Déplacer un évènement de besport vers le calendrier d'Android
 essai_calendar_button_description	This button adds a besport event with default parameters in your android's default calendar. You can change it interactively before saving it.	Ce bouton ajoute un évènement besport, ayant des paramètres par défaut, au calendrier par défaut d'Android. Vous pouvez le modifier interactivement avant de l'enregistrer.
 essai_calendar_click	Click to add an event!	Cliquez pour ajouter un évènement!
 essai_intent_explanation1	Click on this button before to share a file (picture, video) with Ocsigen Start from another application. It makes Ocsigen Start listen to the app that shares the file.	Appuyez sur ce bouton avant de partager un fichier (photo,vidéo) avec Ocsigen Start depuis une autre application. Ce bouton rend Ocsigen Start attentif à la réception de l'intent.
@@ -179,7 +179,7 @@ essai_intent_explanation2	Click on this button to show the file that has been sh
 essai_intent_button	Get intent	Recevoir un intent
 essai_intent_click	Click here to get an intent	Cliquez ici pour recevoir un intent
 share_intent_button_description	Write an image uri and click to share it.	Ajoutez un uri d'image et cliquez pour le partager.
-share_intent_button	Share Intent Button.	Bouton Share Intent.
+share_intent_button	Share Intent Button	Bouton Share Intent
 share_intent_button_description2	Write a text and click to share it.	Ajoutez texte et cliquez pour le partager.
 share_intent_button_description3	Write a video uri and click to share it.	Ajoutez un uri de video et cliquez pour le partager.
 share_intent_popup	See the shared file	Voir le fichier partagé

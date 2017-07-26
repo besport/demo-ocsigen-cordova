@@ -15,7 +15,6 @@ let%shared name () = [%i18n S.essai_intent_button]
 let%shared page_class = "os-page-essai-intent"
 
 
-(* let%client l = ref [] *)
 let%shared uri = ref ""
 let%shared is_video = ref false
 let%shared is_image = ref false
@@ -30,59 +29,49 @@ let%shared affect_to_uri () =
     [%client
 
       let g (intent : Cordova_intent.intent) =
-        match (Cordova_intent.action intent) with
-        | "android.intent.action.SEND" ->
-          if (Cordova_intent.type_ intent)="video/*" then
-            begin
+        begin match (Cordova_intent.action intent) with
+          | "android.intent.action.SEND" ->
+          begin match String.split_on_char '/' (Cordova_intent.type_ intent) with
+            | "video" :: _ ->
+              begin
               uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
               is_video := true;
               is_image := false;
               is_text := false;
             end
-          else if (Cordova_intent.type_ intent)="image/*" then
+            | "image" :: _ ->
             begin
               uri:= (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) 0 ));
               is_image := true;
               is_video := false;
               is_text := false;
             end
-          else if (Cordova_intent.type_ intent)="text/plain" || (Cordova_intent.type_ intent)="text/*" then
+            | "text"::_ ->
             begin
               uri:= (Cordova_intent.text_ (Array.get (Cordova_intent.clipItems intent) 0 ));
               is_image := false;
               is_video := false;
               is_text := true;
             end
-          else
+            | _ ->
             begin
               is_image := false;
               is_video := false;
               is_text := false;
             end
-
-        |"android.intent.action.SEND_TEXT" ->
-          if (Cordova_intent.type_ intent)="text/plain" || (Cordova_intent.type_ intent)="text/*" then
-          begin
-            uri:= (Cordova_intent.text_ (Array.get (Cordova_intent.clipItems intent) 0 ));
-            is_image := false;
-            is_video := false;
-            is_text := true;
-          end
-        (* | "android.intent.action.SEND_MULTIPLE" ->
-          let my_array = Cordova_intent.clipItems intent in
-          for i=0 to (Array.length my_array) - 1 do
-            l := (Cordova_intent.uri (Array.get (Cordova_intent.clipItems intent) i ))::!l;
-          done; *)
+        end
         | "android.intent.action.DEFAULT" ->
           is_image := false;
           is_video := false;
           is_text := false;
-        | _ -> assert false
+        |_ -> ()
+      end
 
 
       in
       let f () =
-        Cordova_intent.setNewIntentHandler g
+        Cordova_intent.setNewIntentHandler g;
+        Cordova_intent.getCordovaIntent g;
       in
       Cordova_intent.addEventListener "deviceReady" f;
     ] in
@@ -94,14 +83,10 @@ let%shared display_uri () =
     Eliom_content.Html.F.tr [
       Eliom_content.Html.F.td [
         Eliom_content.Html.D.img
-          ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px;" ] (* display:inline-block *)
+          ~a:[ Eliom_content.Html.F.a_style "width:100px; height:100px;" ]
           ~alt:"Ocsigen"
           ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
   ]
-
-
-
-
 
 let%shared button msg f =
   let btn =
@@ -119,9 +104,6 @@ let%shared button msg f =
 
 (* Page for this demo *)
 let%shared page () =
-
-
-
 
   let button =
 
@@ -194,8 +176,6 @@ let%shared page () =
                                                        ~src: (Eliom_content.Xml.uri_of_string !uri) ()]]
                          ]
                        end
-
-
                   )
               in
               Lwt.return ()))
